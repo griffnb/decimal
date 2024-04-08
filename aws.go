@@ -29,7 +29,8 @@ func (this *Decimal) MarshalDynamoDBAttributeValue(av *dynamodb.AttributeValue) 
 func (this *Decimal) UnmarshalDynamoDBAttributeValue(av types.AttributeValue) error {
 	avN, ok := av.(*types.AttributeValueMemberN)
 	if !ok {
-		return fmt.Errorf("expected AttributeValueMemberN, got %T", av)
+		*this = NewFromInt(0)
+		return nil
 	}
 	var err error
 	*this, err = NewFromString(avN.Value)
